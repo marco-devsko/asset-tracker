@@ -1,0 +1,13 @@
+{
+  "name": "users-store",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/users/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:users", "type:data-access"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

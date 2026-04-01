@@ -1,0 +1,30 @@
+<h2>Users Table</h2>
+<form [formGroup]="formGroup">
+  <input formControlName="userFilter">
+  <input formControlName="minLength">
+  <br />
+  <span>Valid: {{ formGroup.valid }}</span>
+  <br />
+  @let valErrors = formGroup.errors?.['groupMinLength'];
+  @if (valErrors && formGroup.touched) {
+    <span>{{ valErrors }}</span>
+
+  }
+</form>
+
+<br />
+<button (click)="loadMoreData()">Load more</button>
+Error: {{ error() }}
+Loading: {{ loading() }}
+Current page: {{ page() }}
+<cdk-virtual-scroll-viewport itemSize="50" style="height: 400px; display: block;"
+                             (scrolledIndexChange)="onScroll($event)">
+  <div *cdkVirtualFor="let user of filteredUsers(); let i = index"
+       style="height: 50px; display: flex; gap: 20px;">
+    <div>{{ user.id }}</div>
+    <div>{{ user.name }}</div>
+    <div>{{ user.email }}</div>
+  </div>
+</cdk-virtual-scroll-viewport>
+
+

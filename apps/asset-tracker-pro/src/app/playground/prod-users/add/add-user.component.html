@@ -1,0 +1,23 @@
+<form [formGroup]="addUserForm">
+  <input id="name" placeholder="name" type="text" formControlName="name">
+  <br />
+  <input id="surname" placeholder="surname" type="text" formControlName="surname">
+  <br />
+  <input id="email" placeholder="email" type="email" formControlName="email">
+  @let emailErrors = addUserForm.get('email')?.errors?.['invalidEmail'];
+  @if (emailErrors && addUserForm.get('email')?.touched) {
+    <span id="errorEmail">Błędny email</span>
+  }
+  <br />
+  <input id="born" placeholder="born" type="date" formControlName="born">
+  <br />
+  <button type="submit" (click)="addNewUser(addUserForm.getRawValue())">Add new user</button>
+</form>
+
+<br />
+<span>Caly form: {{ addUserForm.valid }}</span>
+<br />
+
+<span>Email valid: {{ addUserForm.get('email')?.valid }}</span>
+
+

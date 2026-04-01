@@ -1,0 +1,8 @@
+<span> Counter: {{ counter | async }}</span>
+<form [formGroup]="form">
+  <input type="number" [formControlName]="'first'">
+  <input type="number" [formControlName]="'second'">
+
+</form>
+<br/>
+<button (click)="calculate()">Calculate</button>
