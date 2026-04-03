@@ -6,6 +6,8 @@ import {
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +15,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideHttpClient(),
+    providePrimeNG({
+      theme:{
+        preset: Aura
+      }
+    })
   ],
 };
