@@ -23,27 +23,13 @@ export class AddAssetComponent implements OnInit {
   }
 
   onAddAsset(): void {
-    this.assetService.sendDataToDB(
-      this.formGroup.getRawValue().assetName,
-      this.formGroup.getRawValue().assetType
-    ).subscribe();
+    this.assetService
+      .sendDataToDB(
+        this.formGroup.getRawValue().assetName,
+        this.formGroup.getRawValue().assetType
+      )
+      .subscribe();
     this.assetService.setData(this.formGroup.getRawValue());
     this.router.navigate(['/show-summary']);
-  }
-
-  navigateToTable(): void {
-    this.router.navigate(['/table']);
-  }
-
-  navigateToCounter(): void {
-    this.router.navigate(['/counter']);
-  }
-
-  navigateToAddProdUser(): void {
-    this.router.navigate(['/addproduser']);
-  }
-
-  navigateToShowProdUsers(): void {
-    this.router.navigate(['/showprodusers']);
   }
 }
