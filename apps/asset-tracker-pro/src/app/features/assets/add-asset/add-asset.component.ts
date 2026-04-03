@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AssetService } from '../asset.service';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-add-asset',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Button],
   templateUrl: './add-asset.component.html',
   styleUrl: './add-asset.component.scss',
 })
