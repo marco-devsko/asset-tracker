@@ -23,10 +23,12 @@ export class AddAssetComponent implements OnInit {
   }
 
   onAddAsset(): void {
-    console.log('Adding asset:', this.formGroup.getRawValue());
+    this.assetService.sendDataToDB(
+      this.formGroup.getRawValue().assetName,
+      this.formGroup.getRawValue().assetType
+    ).subscribe();
     this.assetService.setData(this.formGroup.getRawValue());
     this.router.navigate(['/show-summary']);
-    // Add your asset addition logic here
   }
 
   navigateToTable(): void {
