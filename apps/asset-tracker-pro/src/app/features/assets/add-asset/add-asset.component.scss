@@ -1,0 +1,14 @@
+.addAssetModal {
+  &-body{
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

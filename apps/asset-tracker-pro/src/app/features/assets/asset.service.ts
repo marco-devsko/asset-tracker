@@ -1,5 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AssetModel } from '@asset-tracker-pro/libs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,20 +9,30 @@ import { HttpClient } from '@angular/common/http';
 export class AssetService {
   httpClient = inject(HttpClient);
 
-  data: Record<string, string> = {};
-
-  setData(data: Record<string, string>): void {
-    this.data = data;
-  }
-
-  getData(): Record<string, string> {
-    return this.data;
-  }
-
-  sendDataToDB(name: string, type: string) {
-    return this.httpClient.post<any>('http://localhost:3000/api/asset', {
+  sendDataToDB(name: string, type: string, iconUrl: string): Observable<AssetModel> {
+    return this.httpClient.post<AssetModel>('http://localhost:3000/api/asset', {
       name,
       type,
+      iconUrl,
     });
+  }
+
+  getAllAssets(): Observable<AssetModel[]> {
+    return this.httpClient.get<AssetModel[]>(
+      'http://localhost:3000/api/asset/all'
+    );
+  }
+
+  removeAsset(id: string) {
+    return this.httpClient.delete<AssetModel>('http://localhost:3000/api/asset/' + id);
+  }
+
+  editAsset(asset: Partial<AssetModel>) {
+    return this.httpClient.put('http://localhost:3000/api/asset/' + asset._id, {
+      name: asset.name,
+      type: asset.type,
+      iconUrl: asset.iconUrl,
+    })
+
   }
 }

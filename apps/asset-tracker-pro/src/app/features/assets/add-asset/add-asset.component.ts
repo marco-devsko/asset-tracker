@@ -1,36 +1,72 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AssetService } from '../asset.service';
 import { Button } from 'primeng/button';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputText } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-add-asset',
-  imports: [ReactiveFormsModule, Button],
+  standalone: true,
+  imports: [ReactiveFormsModule, Button, FloatLabel, InputText],
   templateUrl: './add-asset.component.html',
   styleUrl: './add-asset.component.scss',
 })
-export class AddAssetComponent implements OnInit {
+export class AddAssetComponent {
+  dynamicDialogRef = inject(DynamicDialogRef);
+  config = inject(DynamicDialogConfig);
   router = inject(Router);
   assetService = inject(AssetService);
+  readonly formGroup = new FormGroup({
+    assetName: new FormControl<string>(this.config.data?.name ?? '', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    assetType: new FormControl<string>(this.config.data?.type ?? '', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    assetIconUrl: new FormControl<string>(this.config.data?.iconUrl ?? '', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+  });
 
-  formGroup: FormGroup = new FormGroup({});
+  addAsset(): void {
+    const { assetName, assetType, assetIconUrl } = this.formGroup.getRawValue();
+    const isEditMode = !!this.config.data;
 
-  ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      assetName: new FormControl(''),
-      assetType: new FormControl(''),
-    });
+    if (this.formGroup.invalid) {
+      return;
+    }
+
+    if (isEditMode) {
+      const asset = {
+        _id: this.config.data._id,
+        name: assetName,
+        type: assetType,
+        iconUrl: assetIconUrl,
+      };
+      this.assetService
+        .editAsset(asset)
+        .subscribe(() => this.dynamicDialogRef.close(asset));
+    } else {
+      this.assetService
+        .sendDataToDB(assetName, assetType, assetIconUrl)
+        .subscribe(() =>
+          this.dynamicDialogRef.close({ name: assetName, type: assetType, iconUrl: assetIconUrl }),
+        );
+    }
   }
 
-  onAddAsset(): void {
-    this.assetService
-      .sendDataToDB(
-        this.formGroup.getRawValue().assetName,
-        this.formGroup.getRawValue().assetType
-      )
-      .subscribe();
-    this.assetService.setData(this.formGroup.getRawValue());
-    this.router.navigate(['/show-summary']);
+  cancelAddingAsset(): void {
+    this.dynamicDialogRef.close();
   }
 }

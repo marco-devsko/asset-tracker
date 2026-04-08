@@ -1,7 +1,6 @@
-export type IconName = `${string}_${string}`;
-
 export interface AssetModel {
+  _id: string;
   name: string;
   type: string;
-  icon: IconName;
+  iconUrl: string;
 }

@@ -9,7 +9,7 @@ export class Asset {
   type: string;
 
   @Prop()
-  icon: string;
+  iconUrl: string;
 }
 
 export const AssetSchema = SchemaFactory.createForClass(Asset);

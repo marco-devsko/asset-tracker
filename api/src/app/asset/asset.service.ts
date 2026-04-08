@@ -16,7 +16,7 @@ export class AssetService {
   }
 
   async deleteById(id: string) {
-    return this.assetModel.findById({ _id: id });
+    return this.assetModel.findByIdAndDelete({ _id: id });
   }
 
   async updateById(id: string, asset: Partial<AssetModel>) {

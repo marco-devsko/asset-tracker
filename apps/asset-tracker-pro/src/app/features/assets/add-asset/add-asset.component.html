@@ -1,6 +1,24 @@
 <form [formGroup]="formGroup">
- <input formControlName="assetName" placeholder="Asset Name" />
- <input formControlName="assetType" placeholder="Asset Type" />
+  <div class="addAssetModal-body">
+    <p-floatlabel variant="on">
+      <input pInputText [formControlName]="'assetName'" id="assetName" fluid />
+      <label for="assetName">Asset name</label>
+    </p-floatlabel>
 
- <p-button type="button" (click)="onAddAsset()">Add Asset</p-button>
+    <p-floatlabel variant="on">
+      <input pInputText [formControlName]="'assetType'" id="assetType" fluid />
+      <label for="assetType">Asset type</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on">
+      <input pInputText [formControlName]="'assetIconUrl'" id="assetIconUrl" fluid />
+      <label for="assetIconUrl">Asset icon url</label>
+    </p-floatlabel>
+  </div>
+
+  <div class="addAssetModal-footer">
+    <p-button type="button" (click)="addAsset()" [disabled]="!formGroup.valid">Add Asset</p-button>
+    <p-button type="button" severity="secondary" (click)="cancelAddingAsset()">Cancel</p-button>
+  </div>
+
 </form>
