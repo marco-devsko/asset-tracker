@@ -16,7 +16,9 @@ export class AssetController {
 
   @Post()
   create(@Body() body: AssetModel) {
-    return this.assetService.create(body);
+    return this.assetService.create({
+      ...body
+    });
   }
 
   @Get('all')

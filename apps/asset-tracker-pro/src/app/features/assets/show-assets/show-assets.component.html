@@ -1,0 +1,23 @@
+<p-table [value]="allAssets.value() ?? []" [tableStyle]="{'min-width': '50rem'}">
+  <ng-template #header>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Icon</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-asset>
+    <tr>
+      <td>{{ asset.name }}</td>
+      <td>{{ asset.type }}</td>
+      <td><img class="icon" src="{{asset.iconUrl}}" alt="" /></td>
+      <td>
+        <p-button icon="pi pi-pencil" [rounded]="true" severity="secondary" (click)=" manageAsset(asset)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"
+                  (click)="removeAsset(asset._id)" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<p-button (click)="manageAsset()" label="Add asset" />
