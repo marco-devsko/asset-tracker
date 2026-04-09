@@ -7,6 +7,9 @@ export class Asset {
 
   @Prop()
   type: string;
+
+  @Prop()
+  iconUrl: string;
 }
 
 export const AssetSchema = SchemaFactory.createForClass(Asset);

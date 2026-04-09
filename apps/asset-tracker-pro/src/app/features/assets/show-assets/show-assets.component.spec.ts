@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ShowSummaryComponent } from './show-summary.component';
+import { ShowAssetsComponent } from './show-assets.component';
 
-describe('ShowSummaryComponent', () => {
-  let component: ShowSummaryComponent;
-  let fixture: ComponentFixture<ShowSummaryComponent>;
+describe('ShowAssetsComponent', () => {
+  let component: ShowAssetsComponent;
+  let fixture: ComponentFixture<ShowAssetsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowSummaryComponent],
+      imports: [ShowAssetsComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ShowSummaryComponent);
+    fixture = TestBed.createComponent(ShowAssetsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

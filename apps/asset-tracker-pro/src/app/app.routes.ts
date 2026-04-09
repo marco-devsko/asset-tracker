@@ -1,9 +1,12 @@
 import { Route } from '@angular/router';
-import { AddAssetComponent } from './features/assets/add-asset/add-asset.component';
-import { ShowSummaryComponent } from './features/assets/show-summary/show-summary.component';
 
 export const appRoutes: Route[] = [
-  { path: '', redirectTo: 'add-asset', pathMatch: 'full' },
-  { path: 'add-asset', component: AddAssetComponent },
-  { path: 'show-summary', component: ShowSummaryComponent },
+  { path: '', redirectTo: 'show-assets', pathMatch: 'full' },
+  {
+    path: 'show-assets',
+    loadComponent: () =>
+      import('./features/assets/show-assets/show-assets.component').then(
+        (m) => m.ShowAssetsComponent
+      ),
+  },
 ];

@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@asset-tracker-pro/users-store": ["libs/users/src/index.ts"]
+      "@asset-tracker-pro/libs": ["libs/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
