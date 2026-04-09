@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AssetService } from '../asset.service';
 import { Button } from 'primeng/button';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputText } from 'primeng/inputtext';
+import { catchError, take, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-add-asset',
@@ -20,10 +20,11 @@ import { InputText } from 'primeng/inputtext';
   styleUrl: './add-asset.component.scss',
 })
 export class AddAssetComponent {
-  dynamicDialogRef = inject(DynamicDialogRef);
-  config = inject(DynamicDialogConfig);
-  router = inject(Router);
-  assetService = inject(AssetService);
+  readonly dynamicDialogRef = inject(DynamicDialogRef);
+  readonly config = inject(DynamicDialogConfig);
+  readonly assetService = inject(AssetService);
+  readonly data = this.config.data;
+  readonly isEditMode = computed(() => !!this.data?._id);
   readonly formGroup = new FormGroup({
     assetName: new FormControl<string>(this.config.data?.name ?? '', {
       nonNullable: true,
@@ -40,30 +41,28 @@ export class AddAssetComponent {
   });
 
   addAsset(): void {
-    const { assetName, assetType, assetIconUrl } = this.formGroup.getRawValue();
-    const isEditMode = !!this.config.data;
-
     if (this.formGroup.invalid) {
       return;
     }
 
-    if (isEditMode) {
-      const asset = {
-        _id: this.config.data._id,
-        name: assetName,
-        type: assetType,
-        iconUrl: assetIconUrl,
-      };
-      this.assetService
-        .editAsset(asset)
-        .subscribe(() => this.dynamicDialogRef.close(asset));
-    } else {
-      this.assetService
-        .sendDataToDB(assetName, assetType, assetIconUrl)
-        .subscribe(() =>
-          this.dynamicDialogRef.close({ name: assetName, type: assetType, iconUrl: assetIconUrl }),
-        );
-    }
+    const { assetName, assetType, assetIconUrl } = this.formGroup.getRawValue();
+
+    const asset = {
+      name: assetName,
+      type: assetType,
+      iconUrl: assetIconUrl,
+    };
+
+    const request$ = this.isEditMode()
+      ? this.assetService.editAsset({ ...asset, _id: this.data._id })
+      : this.assetService.createNewAsset(asset);
+
+    request$
+      .pipe(
+        take(1),
+        catchError((error) => throwError(error))
+      )
+      .subscribe(() => this.dynamicDialogRef.close(asset));
   }
 
   cancelAddingAsset(): void {

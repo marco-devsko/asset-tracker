@@ -1,6 +1,4 @@
-@let tableAssets = allAssets.value() ?? [];
-
-<p-table [value]="tableAssets" [tableStyle]="{'min-width': '50rem'}">
+<p-table [value]="allAssets.value() ?? []" [tableStyle]="{'min-width': '50rem'}">
   <ng-template #header>
     <tr>
       <th>Name</th>
@@ -13,10 +11,11 @@
     <tr>
       <td>{{ asset.name }}</td>
       <td>{{ asset.type }}</td>
-      <td><img class="icon" src="{{asset.iconUrl}}" alt=""/></td>
+      <td><img class="icon" src="{{asset.iconUrl}}" alt="" /></td>
       <td>
-        <p-button icon="pi pi-pencil" [rounded]="true" severity="secondary" (click)=" manageAsset(asset)"/>
-        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" (click)="removeAsset(asset._id)"/>
+        <p-button icon="pi pi-pencil" [rounded]="true" severity="secondary" (click)=" manageAsset(asset)" />
+        <p-button icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger"
+                  (click)="removeAsset(asset._id)" />
       </td>
     </tr>
   </ng-template>

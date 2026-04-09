@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { AssetService } from '../asset.service';
-import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { AssetModel } from '@asset-tracker-pro/libs';
 import { Button } from 'primeng/button';
@@ -13,7 +12,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-show-assets',
   standalone: true,
-  imports: [TableModule, AsyncPipe, Button, IconFieldModule],
+  imports: [TableModule, Button, IconFieldModule],
   templateUrl: './show-assets.component.html',
   styleUrl: './show-assets.component.scss',
   providers: [DialogService],
